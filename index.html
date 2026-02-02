@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For My Love ❤️</title>
+<title>Be My Valentine ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   body {
@@ -21,17 +21,17 @@
     text-align: center;
     padding: 40px;
     max-width: 90%;
-    backdrop-filter: blur(5px);
-    border-radius: 20px;
-    background: rgba(0,0,0,0.3);
-    box-shadow: 0 0 30px rgba(255, 77, 109, 0.6);
+    backdrop-filter: blur(6px);
+    border-radius: 22px;
+    background: rgba(0,0,0,0.35);
+    box-shadow: 0 0 35px rgba(255, 77, 109, 0.7);
   }
 
   h1 {
-    font-size: 2.8rem;
+    font-size: 2.7rem;
     margin-bottom: 25px;
     text-shadow: 0 0 25px #ff7aa2, 0 0 50px #ff1e56;
-    line-height: 1.2;
+    line-height: 1.3;
   }
 
   .buttons {
@@ -41,13 +41,13 @@
   }
 
   button {
-    padding: 16px 36px;
+    padding: 16px 38px;
     font-size: 1.2rem;
     border-radius: 50px;
     border: none;
     cursor: pointer;
     margin: 10px;
-    transition: transform 0.2s;
+    transition: transform 0.2s ease;
   }
 
   #yes {
@@ -71,8 +71,8 @@
   .message {
     display: none;
     margin-top: 30px;
-    font-size: 1.3rem;
-    line-height: 1.8;
+    font-size: 1.35rem;
+    line-height: 1.9;
     animation: fadeIn 2s ease;
     color: #ffe6ee;
   }
@@ -98,26 +98,33 @@
 <body>
 
 <div class="box">
-  <h1 id="question">Kitna bhi lad lo, Appa, tum hi Sanvika ke banoge… samjhe? 💖 Ladle! 😘</h1>
+  <h1>Will you be my Valentine? 💌🐼</h1>
 
   <div class="buttons" id="quiz">
-    <button id="yes" onclick="showMessage()">Haan 💖</button>
-    <button id="no">Nahi 🙈</button>
+    <button id="yes" onclick="showMessage()">Yes 💖</button>
+    <button id="no">No 🙈</button>
   </div>
 
   <div class="message" id="msg">
     🌹<br><br>
-    Tumhara gussa chhota sa hai, par dil ka pyaar itna bada ki shabd kam pad jaaye… 😘<br>
-    Kitna bhi lad lo, Appa, tum hi Sanvika ke forever banoge! 💖<br><br>
-    ❤️ Tumhare bina toh life adhoori hai, aur tumhare saath sab perfect hai…<br>
-    💕 Hamesha tumhara hi rahungi, samjhe? 😍
+    Tumhara gussa chhota sa hai,<br>
+    par tumhara pyaar meri duniya jitna bada hai… 😘<br><br>
+
+    Kitna bhi lad lo Appa,<br>
+    akhir mein tum hi Sanvika ke banoge —  
+    aaj bhi, kal bhi, hamesha 💖<br><br>
+
+    Tumhare saath har din special hai,<br>
+    aur tumhare bina kuch bhi complete nahi lagta… 🥺❤️<br><br>
+
+    Hamesha mere Valentine banoge na? 😍💫
   </div>
 </div>
 
 <script>
   const noBtn = document.getElementById('no');
 
-  // Make "No" button run away
+  // No button keeps running
   noBtn.addEventListener('mouseenter', () => {
     const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
     const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -125,7 +132,6 @@
     noBtn.style.top = `${y}px`;
   });
 
-  // Show love message
   function showMessage() {
     document.getElementById('msg').style.display = 'block';
     document.getElementById('quiz').style.display = 'none';
