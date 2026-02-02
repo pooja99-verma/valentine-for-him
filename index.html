@@ -33,6 +33,7 @@
   .buttons {
     margin-top: 25px;
     position: relative;
+    height: 120px;
   }
 
   button {
@@ -54,18 +55,20 @@
     position: absolute;
     background: #444;
     color: white;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .message {
     display: none;
     margin-top: 30px;
-    font-size: 1.3rem;
-    line-height: 1.6;
+    font-size: 1.25rem;
+    line-height: 1.7;
     animation: fadeIn 1.5s ease;
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.8); }
+    from { opacity: 0; transform: scale(0.9); }
     to { opacity: 1; transform: scale(1); }
   }
 
@@ -73,7 +76,6 @@
     position: absolute;
     font-size: 20px;
     animation: float 6s linear infinite;
-    color: #ff4d6d;
   }
 
   @keyframes float {
@@ -91,29 +93,52 @@
 
   <div class="buttons">
     <button id="yes" onclick="yesClicked()">YES 💖</button>
-    <button id="no" onmouseover="moveNo()">NO 🙄</button>
+    <button id="no">NO 🙄</button>
   </div>
 
   <div class="message" id="msg">
     🌹<br><br>
-    Of course you said yes…<br>
-    because we both know<br>
-    you and I just make sense 🫶<br><br>
-    You’re my favorite person,<br>
-    my comfort, my chaos,<br>
-    my always.<br><br>
-    Happy Valentine’s Day, my love ❤️
+    Fights are temporary,<br>
+    but what we have is not. 🤍<br><br>
+
+    We’ve been upset for a few days,<br>
+    said things we didn’t mean,<br>
+    and felt distant…<br>
+    but my heart never stopped choosing you.<br><br>
+
+    I don’t want perfection.<br>
+    I want <b>us</b>.<br>
+    I want to fix things,<br>
+    grow together,<br>
+    and make this work — with you.<br><br>
+
+    So if you’re still my person,<br>
+    today, tomorrow, always…<br>
+    then yes — be my Valentine ❤️
   </div>
 </div>
 
 <script>
+  const noBtn = document.getElementById("no");
+
   function moveNo() {
-    const noBtn = document.getElementById("no");
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
+    const padding = 20;
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
   }
+
+  document.addEventListener("mousemove", (e) => {
+    const rect = noBtn.getBoundingClientRect();
+    const distance = Math.hypot(
+      e.clientX - (rect.left + rect.width / 2),
+      e.clientY - (rect.top + rect.height / 2)
+    );
+    if (distance < 120) moveNo();
+  });
+
+  noBtn.addEventListener("touchstart", moveNo);
 
   function yesClicked() {
     document.querySelector(".buttons").style.display = "none";
@@ -131,7 +156,9 @@
   }
 
   setInterval(createHeart, 300);
+  setInterval(moveNo, 1500);
 </script>
 
 </body>
 </html>
+
