@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Be My Valentine ❤️</title>
+<title>For My Love ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   body {
@@ -36,6 +36,8 @@
 
   .buttons {
     margin-top: 30px;
+    position: relative;
+    height: 140px;
   }
 
   button {
@@ -48,14 +50,22 @@
     transition: transform 0.2s;
   }
 
-  .quiz-btn {
+  #yes {
     background: linear-gradient(45deg, #ff4d6d, #ff1e56);
     color: white;
-    box-shadow: 0 0 25px rgba(255,77,109,0.8);
+    box-shadow: 0 0 25px rgba(255,77,109,0.9);
   }
 
-  .quiz-btn:hover {
+  #yes:hover {
     transform: scale(1.1);
+  }
+
+  #no {
+    position: absolute;
+    background: #444;
+    color: white;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .message {
@@ -72,9 +82,8 @@
     to { opacity: 1; transform: scale(1); }
   }
 
-  .heart {
+  .heart, .panda {
     position: absolute;
-    font-size: 24px;
     animation: float 6s linear infinite;
   }
 
@@ -89,94 +98,63 @@
 <body>
 
 <div class="box">
-  <h1 id="question">Will you be my Valentine? ❤️</h1>
+  <h1 id="question">Kitna bhi lad lo, Appa, tum hi Sanvika ke banoge… samjhe? 💖 Ladle! 😘</h1>
 
   <div class="buttons" id="quiz">
-    <button class="quiz-btn" onclick="nextQuestion(1)">Yes 💖</button>
-    <button class="quiz-btn" onclick="nextQuestion(2)">Of course 😘</button>
+    <button id="yes" onclick="showMessage()">Haan 💖</button>
+    <button id="no">Nahi 🙈</button>
   </div>
 
   <div class="message" id="msg">
     🌹<br><br>
-    Fights are temporary,<br>
-    but what we have is forever. 🤍<br><br>
-
-    We’ve had our ups and downs,<br>
-    said things we didn’t mean,<br>
-    and felt distant…<br>
-    yet my heart never stopped choosing you.<br><br>
-
-    I don’t want perfection.<br>
-    I want <b>us</b>.<br>
-    To grow together,<br>
-    to laugh together,<br>
-    and to make every moment magical — with you.<br><br>
-
-    So if you’re still my person,<br>
-    today, tomorrow, always…<br>
-    then yes — be my Valentine ❤️
+    Tumhara gussa chhota sa hai, par dil ka pyaar itna bada ki shabd kam pad jaaye… 😘<br>
+    Kitna bhi lad lo, Appa, tum hi Sanvika ke forever banoge! 💖<br><br>
+    ❤️ Tumhare bina toh life adhoori hai, aur tumhare saath sab perfect hai…<br>
+    💕 Hamesha tumhara hi rahungi, samjhe? 😍
   </div>
 </div>
 
 <script>
-  const questions = [
-    {
-      q: "Will you be my Valentine? ❤️",
-      a: ["Yes 💖", "Of course 😘"]
-    },
-    {
-      q: "What's your favorite way to spend time together?",
-      a: ["Candlelight dinner 🕯️", "Movie night 🎬", "Stargazing 🌌"]
-    },
-    {
-      q: "Pick a romantic gesture 💌",
-      a: ["Surprise love note ✍️", "Flowers 🌹", "Holding hands 🤝"]
-    },
-    {
-      q: "Your favorite thing about us?",
-      a: ["Laughing together 😂", "Cuddles 🤗", "Our deep talks 💭"]
-    },
-    {
-      q: "Final question: Do you love me? ❤️",
-      a: ["Forever 💖", "Always 😘", "More than anything 💕"]
-    }
-  ];
+  const noBtn = document.getElementById('no');
 
-  let current = 0;
+  // Make "No" button run away
+  noBtn.addEventListener('mouseenter', () => {
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  });
 
-  function nextQuestion(choice) {
-    current++;
-    const questionEl = document.getElementById("question");
-    const quizEl = document.getElementById("quiz");
-
-    if(current < questions.length) {
-      questionEl.innerText = questions[current].q;
-      quizEl.innerHTML = "";
-      questions[current].a.forEach(ans => {
-        const btn = document.createElement("button");
-        btn.className = "quiz-btn";
-        btn.innerText = ans;
-        btn.onclick = nextQuestion;
-        quizEl.appendChild(btn);
-      });
-    } else {
-      quizEl.style.display = "none";
-      questionEl.style.display = "none";
-      document.getElementById("msg").style.display = "block";
-    }
+  // Show love message
+  function showMessage() {
+    document.getElementById('msg').style.display = 'block';
+    document.getElementById('quiz').style.display = 'none';
   }
 
+  // Floating hearts
   function createHeart() {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+    heart.innerText = '❤️';
     document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 7000);
+    setTimeout(() => heart.remove(), 6000);
   }
 
-  setInterval(createHeart, 300);
+  // Floating pandas
+  function createPanda() {
+    const panda = document.createElement('div');
+    panda.className = 'panda';
+    panda.style.left = Math.random() * window.innerWidth + 'px';
+    panda.style.fontSize = (Math.random() * 30 + 30) + 'px';
+    panda.innerText = '🐼';
+    document.body.appendChild(panda);
+    setTimeout(() => panda.remove(), 6000);
+  }
+
+  setInterval(createHeart, 500);
+  setInterval(createPanda, 1200);
 </script>
 
 </body>
