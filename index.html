@@ -15,6 +15,7 @@
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
     color: white;
+    position: relative;
   }
 
   .box {
@@ -25,6 +26,7 @@
     border-radius: 22px;
     background: rgba(0,0,0,0.35);
     box-shadow: 0 0 35px rgba(255, 77, 109, 0.7);
+    z-index: 10;
   }
 
   h1 {
@@ -34,13 +36,7 @@
     line-height: 1.3;
   }
 
-  .buttons {
-    margin-top: 30px;
-    position: relative;
-    height: 140px;
-  }
-
-  button {
+  #yes {
     padding: 16px 38px;
     font-size: 1.2rem;
     border-radius: 50px;
@@ -48,12 +44,11 @@
     cursor: pointer;
     margin: 10px;
     transition: transform 0.2s ease;
-  }
-
-  #yes {
     background: linear-gradient(45deg, #ff4d6d, #ff1e56);
     color: white;
     box-shadow: 0 0 25px rgba(255,77,109,0.9);
+    z-index: 10;
+    position: relative;
   }
 
   #yes:hover {
@@ -61,11 +56,18 @@
   }
 
   #no {
-    position: absolute;
+    position: fixed; /* changed from absolute inside container to fixed */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: #444;
     color: white;
-    left: 50%;
-    transform: translateX(-50%);
+    padding: 16px 38px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    z-index: 100;
   }
 
   .message {
@@ -100,31 +102,37 @@
 <div class="box">
   <h1>Will you be my Valentine? 💌🐼</h1>
 
-  <div class="buttons" id="quiz">
-    <button id="yes" onclick="showMessage()">Yes 💖</button>
-    <button id="no">No 🙈</button>
-  </div>
+  <button id="yes" onclick="showMessage()">Yes 💖</button>
+</div>
 
-  <div class="message" id="msg">
-    🌹<br><br>
-    Tumhara gussa chhota sa hai,<br>
-    par tumhara pyaar meri duniya jitna bada hai… 😘<br><br>
+<button id="no">No 🙈</button>
 
-    Kitna bhi lad lo Appa,<br>
-    akhir mein tum hi Sanvika ke banoge —  
-    aaj bhi, kal bhi, hamesha 💖<br><br>
+<div class="message" id="msg">
+  🌹<br><br>
+Tumhara gussa chhota sa hai,<br>
+par tumhara pyaar meri poori duniya jitna bada hai… 😘<br><br>
 
-    Tumhare saath har din special hai,<br>
-    aur tumhare bina kuch bhi complete nahi lagta… 🥺❤️<br><br>
+Sach bolun toh mujhe kuch bhi nahi chahiye,<br>
+na gifts, na promises  
+bas tumhara thoda sa time chahiye… 💭❤️<br><br>
 
-    Hamesha mere Valentine banoge na? 😍💫
-  </div>
+Kabhi‑kabhi main thodi pagal ho jaati hoon,<br>
+kyunki tum mere dil ke itne kareeb ho<br>
+ki tumhari kami seedha saans tak lagti hai… 🥺<br><br>
+
+Kitna bhi lad lo Appa,<br>
+akhir mein tum hi Sanvika ke banoge —  
+aaj bhi, kal bhi, aur hamesha 💖<br><br>
+
+I love you so much, lubu…<br>
+my babuss, my peace, my forever. 😍💫
+
 </div>
 
 <script>
   const noBtn = document.getElementById('no');
 
-  // No button keeps running
+  // No button dodges anywhere in the viewport
   noBtn.addEventListener('mouseenter', () => {
     const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
     const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -134,7 +142,8 @@
 
   function showMessage() {
     document.getElementById('msg').style.display = 'block';
-    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('yes').style.display = 'none';
+    noBtn.style.display = 'none';
   }
 
   // Floating hearts
