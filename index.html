@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Be My Valentine ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
   body {
     margin: 0;
@@ -32,8 +31,6 @@
 
   .buttons {
     margin-top: 25px;
-    position: relative;
-    height: 120px;
   }
 
   button {
@@ -45,18 +42,15 @@
     margin: 10px;
   }
 
-  #yes {
+  .yes, .quiz-btn {
     background: linear-gradient(45deg, #ff4d6d, #ff1e56);
     color: white;
     box-shadow: 0 0 20px rgba(255,77,109,0.8);
   }
 
-  #no {
-    position: absolute;
+  .no {
     background: #444;
     color: white;
-    left: 50%;
-    transform: translateX(-50%);
   }
 
   .message {
@@ -85,33 +79,29 @@
   }
 </style>
 </head>
-
 <body>
 
 <div class="box">
   <h1>Will you be my Valentine? ❤️</h1>
 
-  <div class="buttons">
-    <button id="yes" onclick="yesClicked()">YES 💖</button>
-    <button id="no">NO 🙄</button>
+  <div class="buttons" id="quiz">
+    <button class="quiz-btn" onclick="nextQuestion(1)">Of course! 💖</button>
+    <button class="quiz-btn" onclick="nextQuestion(2)">Hmm… maybe 😳</button>
   </div>
 
   <div class="message" id="msg">
     🌹<br><br>
     Fights are temporary,<br>
     but what we have is not. 🤍<br><br>
-
     We’ve been upset for a few days,<br>
     said things we didn’t mean,<br>
     and felt distant…<br>
     but my heart never stopped choosing you.<br><br>
-
     I don’t want perfection.<br>
     I want <b>us</b>.<br>
     I want to fix things,<br>
     grow together,<br>
     and make this work — with you.<br><br>
-
     So if you’re still my person,<br>
     today, tomorrow, always…<br>
     then yes — be my Valentine ❤️
@@ -119,29 +109,27 @@
 </div>
 
 <script>
-  const noBtn = document.getElementById("no");
-
-  function moveNo() {
-    const padding = 20;
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+  function nextQuestion(choice) {
+    const quiz = document.getElementById("quiz");
+    if(choice === 1) {
+      quiz.innerHTML = `
+        <h1>Yay! 💕 What's our perfect date?</h1>
+        <button class="quiz-btn" onclick="nextQuestion(3)">Candlelight dinner 🕯️</button>
+        <button class="quiz-btn" onclick="nextQuestion(3)">Movie night 🎬</button>
+        <button class="quiz-btn" onclick="nextQuestion(3)">Stargazing 🌌</button>
+      `;
+    } else {
+      quiz.innerHTML = `
+        <h1>Aww, don't be shy 😘</h1>
+        <button class="quiz-btn" onclick="nextQuestion(1)">Okay, yes 💖</button>
+        <button class="quiz-btn" onclick="nextQuestion(1)">Maybe 😳</button>
+      `;
+    }
   }
 
-  document.addEventListener("mousemove", (e) => {
-    const rect = noBtn.getBoundingClientRect();
-    const distance = Math.hypot(
-      e.clientX - (rect.left + rect.width / 2),
-      e.clientY - (rect.top + rect.height / 2)
-    );
-    if (distance < 120) moveNo();
-  });
-
-  noBtn.addEventListener("touchstart", moveNo);
-
-  function yesClicked() {
-    document.querySelector(".buttons").style.display = "none";
+  function nextQuestion(choice) {
+    const quiz = document.getElementById("quiz");
+    quiz.style.display = "none";
     document.getElementById("msg").style.display = "block";
   }
 
@@ -156,9 +144,7 @@
   }
 
   setInterval(createHeart, 300);
-  setInterval(moveNo, 1500);
 </script>
 
 </body>
 </html>
-
