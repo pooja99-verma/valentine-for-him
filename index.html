@@ -19,89 +19,99 @@
 
   .box {
     text-align: center;
-    padding: 30px;
+    padding: 40px;
     max-width: 90%;
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    background: rgba(0,0,0,0.3);
+    box-shadow: 0 0 30px rgba(255, 77, 109, 0.6);
   }
 
   h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    text-shadow: 0 0 20px #ff7aa2;
+    font-size: 2.8rem;
+    margin-bottom: 25px;
+    text-shadow: 0 0 25px #ff7aa2, 0 0 50px #ff1e56;
+    line-height: 1.2;
   }
 
   .buttons {
-    margin-top: 25px;
+    margin-top: 30px;
   }
 
   button {
-    padding: 14px 30px;
-    font-size: 1.1rem;
-    border-radius: 30px;
+    padding: 16px 36px;
+    font-size: 1.2rem;
+    border-radius: 50px;
     border: none;
     cursor: pointer;
     margin: 10px;
+    transition: transform 0.2s;
   }
 
-  .yes, .quiz-btn {
+  .quiz-btn {
     background: linear-gradient(45deg, #ff4d6d, #ff1e56);
     color: white;
-    box-shadow: 0 0 20px rgba(255,77,109,0.8);
+    box-shadow: 0 0 25px rgba(255,77,109,0.8);
   }
 
-  .no {
-    background: #444;
-    color: white;
+  .quiz-btn:hover {
+    transform: scale(1.1);
   }
 
   .message {
     display: none;
     margin-top: 30px;
-    font-size: 1.25rem;
-    line-height: 1.7;
-    animation: fadeIn 1.5s ease;
+    font-size: 1.3rem;
+    line-height: 1.8;
+    animation: fadeIn 2s ease;
+    color: #ffe6ee;
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
+    from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
   }
 
   .heart {
     position: absolute;
-    font-size: 20px;
+    font-size: 24px;
     animation: float 6s linear infinite;
   }
 
   @keyframes float {
-    0% { transform: translateY(100vh); opacity: 0; }
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
     50% { opacity: 1; }
-    100% { transform: translateY(-10vh); opacity: 0; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
   }
 </style>
 </head>
+
 <body>
 
 <div class="box">
-  <h1>Will you be my Valentine? ❤️</h1>
+  <h1 id="question">Will you be my Valentine? ❤️</h1>
 
   <div class="buttons" id="quiz">
-    <button class="quiz-btn" onclick="nextQuestion(1)">Of course! 💖</button>
-    <button class="quiz-btn" onclick="nextQuestion(2)">Hmm… maybe 😳</button>
+    <button class="quiz-btn" onclick="nextQuestion(1)">Yes 💖</button>
+    <button class="quiz-btn" onclick="nextQuestion(2)">Of course 😘</button>
   </div>
 
   <div class="message" id="msg">
     🌹<br><br>
     Fights are temporary,<br>
-    but what we have is not. 🤍<br><br>
-    We’ve been upset for a few days,<br>
+    but what we have is forever. 🤍<br><br>
+
+    We’ve had our ups and downs,<br>
     said things we didn’t mean,<br>
     and felt distant…<br>
-    but my heart never stopped choosing you.<br><br>
+    yet my heart never stopped choosing you.<br><br>
+
     I don’t want perfection.<br>
     I want <b>us</b>.<br>
-    I want to fix things,<br>
-    grow together,<br>
-    and make this work — with you.<br><br>
+    To grow together,<br>
+    to laugh together,<br>
+    and to make every moment magical — with you.<br><br>
+
     So if you’re still my person,<br>
     today, tomorrow, always…<br>
     then yes — be my Valentine ❤️
@@ -109,28 +119,51 @@
 </div>
 
 <script>
-  function nextQuestion(choice) {
-    const quiz = document.getElementById("quiz");
-    if(choice === 1) {
-      quiz.innerHTML = `
-        <h1>Yay! 💕 What's our perfect date?</h1>
-        <button class="quiz-btn" onclick="nextQuestion(3)">Candlelight dinner 🕯️</button>
-        <button class="quiz-btn" onclick="nextQuestion(3)">Movie night 🎬</button>
-        <button class="quiz-btn" onclick="nextQuestion(3)">Stargazing 🌌</button>
-      `;
-    } else {
-      quiz.innerHTML = `
-        <h1>Aww, don't be shy 😘</h1>
-        <button class="quiz-btn" onclick="nextQuestion(1)">Okay, yes 💖</button>
-        <button class="quiz-btn" onclick="nextQuestion(1)">Maybe 😳</button>
-      `;
+  const questions = [
+    {
+      q: "Will you be my Valentine? ❤️",
+      a: ["Yes 💖", "Of course 😘"]
+    },
+    {
+      q: "What's your favorite way to spend time together?",
+      a: ["Candlelight dinner 🕯️", "Movie night 🎬", "Stargazing 🌌"]
+    },
+    {
+      q: "Pick a romantic gesture 💌",
+      a: ["Surprise love note ✍️", "Flowers 🌹", "Holding hands 🤝"]
+    },
+    {
+      q: "Your favorite thing about us?",
+      a: ["Laughing together 😂", "Cuddles 🤗", "Our deep talks 💭"]
+    },
+    {
+      q: "Final question: Do you love me? ❤️",
+      a: ["Forever 💖", "Always 😘", "More than anything 💕"]
     }
-  }
+  ];
+
+  let current = 0;
 
   function nextQuestion(choice) {
-    const quiz = document.getElementById("quiz");
-    quiz.style.display = "none";
-    document.getElementById("msg").style.display = "block";
+    current++;
+    const questionEl = document.getElementById("question");
+    const quizEl = document.getElementById("quiz");
+
+    if(current < questions.length) {
+      questionEl.innerText = questions[current].q;
+      quizEl.innerHTML = "";
+      questions[current].a.forEach(ans => {
+        const btn = document.createElement("button");
+        btn.className = "quiz-btn";
+        btn.innerText = ans;
+        btn.onclick = nextQuestion;
+        quizEl.appendChild(btn);
+      });
+    } else {
+      quizEl.style.display = "none";
+      questionEl.style.display = "none";
+      document.getElementById("msg").style.display = "block";
+    }
   }
 
   function createHeart() {
